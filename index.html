@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta name="google-site-verification" content="XA4AAbWZGzh5Y3j84R6MzHg2T1zvt4bIgAiYCUju1I8" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القدوة ضياء العوضي | Zengawy - الباشمهندس احمد سيد</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            background-color: #0b1120; 
+            color: #f8fafc; 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-red-600 selection:text-white">
+
+    <!-- شريط التنقل العلوي (Header) -->
+    <header class="bg-slate-900/95 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-40 shadow-xl">
+        <div class="container mx-auto px-4 py-3 sm:py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <!-- الهوية واسم الباشمهندس أحمد سيد بالبنط العريض المميز -->
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                <div onclick="location.reload()" class="cursor-pointer group flex items-center gap-2">
+                    <span class="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-400 tracking-wider">
+                        القدوة ضياء العوضي
+                    </span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-400 group-hover:text-slate-200 transition">
+                        | Zengawy
+                    </span>
+                </div>
+
+                <!-- عبارة الباشمهندس احمد سيد بالبنط العريض واللون الأحمر/الذهبي -->
+                <span class="bg-gradient-to-r from-red-950 via-slate-900 to-amber-950 border border-red-500/40 text-red-400 text-xs sm:text-sm font-black px-3.5 py-1 rounded-full shadow-lg shadow-red-950/50 flex items-center gap-1.5 ring-1 ring-amber-500/20">
+                    <span class="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    الباشمهندس احمد سيد
+                </span>
+            </div>
+            
+            <!-- أزرار التبديل وشريط البحث -->
+            <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                <!-- أزرار التبديل (أفلام / مسلسلات) -->
+                <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 w-full sm:w-auto justify-center">
+                    <button id="moviesTab" onclick="switchTab('movie')" class="px-5 py-2 rounded-lg font-bold text-xs sm:text-sm bg-red-600 text-white transition shadow-md shadow-red-900/40">
+                        🎬 أفلام
+                    </button>
+                    <button id="tvTab" onclick="switchTab('tv')" class="px-5 py-2 rounded-lg font-bold text-xs sm:text-sm text-slate-400 hover:text-white transition">
+                        📺 مسلسلات
+                    </button>
+                </div>
+
+                <!-- شريط البحث -->
+                <div class="relative w-full sm:w-64">
+                    <input type="text" id="searchInput" placeholder="ابحث (مثال: La Casa de Papel, Dexter)..." class="bg-slate-950 text-xs sm:text-sm text-slate-200 placeholder-slate-500 px-4 py-2 rounded-xl border border-slate-800 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 w-full transition">
+                    <span class="absolute left-3 top-2.5 text-slate-500 text-xs">🔍</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي (شبكة العرض Grid) -->
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        <div class="flex items-center justify-between mb-6 border-r-4 border-red-600 pr-3">
+            <h2 id="sectionTitle" class="text-lg sm:text-xl font-bold text-slate-100">أحدث الأفلام الرائجة</h2>
+            <span class="text-xs text-slate-400 font-medium">تحديث يومي مباشر</span>
+        </div>
+        
+        <!-- شبكة الكروت -->
+        <div id="mediaGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
+            <!-- سيتم إضافة الكروت ديناميكياً عن طريق JavaScript -->
+        </div>
+    </main>
+
+    <!-- نافذة المشغل (Modal Overlay) -->
+    <div id="playerModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 hidden flex flex-col justify-center items-center p-2 sm:p-4 transition-all duration-300">
+        <div class="w-full max-w-5xl bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col max-h-[95vh] relative">
+            
+            <!-- رأس النافذة -->
+            <div class="flex justify-between items-center p-3 sm:p-4 border-b border-slate-800/80 bg-slate-950">
+                <div class="flex items-center gap-2 overflow-hidden">
+                    <span class="text-red-500 font-bold text-base">▶</span>
+                    <h3 id="modalTitle" class="font-bold text-sm sm:text-base text-white truncate">عنوان العرض</h3>
+                </div>
+                <button onclick="closePlayer()" class="bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white px-3.5 py-1.5 rounded-lg text-xs sm:text-sm transition font-bold flex items-center gap-1">
+                    <span>إغلاق</span>
+                    <span>✕</span>
+                </button>
+            </div>
+
+            <!-- إطار مشغل الفيديو -->
+            <div class="relative w-full aspect-video bg-black flex items-center justify-center">
+                <iframe id="videoFrame" src="" class="w-full h-full border-0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            </div>
+
+            <!-- لوحة التحكم الديناميكية (أزرار السيرفرات والتنزيل والمواسم والحلقات) -->
+            <div id="controlsContainer"></div>
+
+            <!-- ملخص قصة الفيلم / المسلسل -->
+            <div class="p-4 text-xs sm:text-sm text-slate-400 overflow-y-auto bg-slate-950/60 max-h-28 border-t border-slate-800/50">
+                <p id="modalOverview" class="leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر (Footer) -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-8 text-center text-slate-400 flex flex-col items-center gap-3 mt-auto">
+        <div class="flex items-center gap-2">
+            <span class="text-base font-bold text-slate-200">القدوة ضياء العوضي</span>
+            <span class="text-xs text-slate-500">| Zengawy</span>
+        </div>
+        
+        <!-- عبارة الباشمهندس احمد سيد بالبنط العريض في الأسفل -->
+        <div class="bg-slate-900 border border-red-500/30 text-red-400 font-black text-sm sm:text-base px-6 py-2 rounded-xl shadow-lg flex items-center gap-2">
+            <span>✨</span>
+            <span class="tracking-wide">الباشمهندس احمد سيد</span>
+            <span>✨</span>
+        </div>
+        
+        <p class="text-[11px] text-slate-500 mt-1">جميع الحقوق محفوظة © 2026 - منصة بث سينمائي مستقلة</p>
+    </footer>
+
+    <!-- ملف السكريبت -->
+    <script src="script.js"></script>
+</body>
+</html>
